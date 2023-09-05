@@ -29,12 +29,11 @@ const StudentDetailsPage = () => {
       <h3>{student.email}</h3>
       <ul>
         {student.priorXp.map(currentXp => (
-          <li >{currentXp}</li>
+          <li>{currentXp}</li>
         ))}
       </ul>
-      
     </>
-  ) : <h1>Loading...</h1>
+  ) : <h1>Loading...</h1> 
 }
 
 export default StudentDetailsPage;

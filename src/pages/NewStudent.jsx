@@ -1,12 +1,12 @@
 import {useState} from "react";
 
-function RagnarsPage () {
+function NewStudent () {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [priorXp, setpriorXp] = useState([])
 
   const handleNewStudent = async() => {
-    const priorXpArray = priorXp.slit(' ')
+    const priorXpArray = priorXp.split(' ')
     const newStudent = {
       name,
       email,
@@ -34,4 +34,4 @@ function RagnarsPage () {
   )
   }
 
-export default RagnarsPage
+export default NewStudent
