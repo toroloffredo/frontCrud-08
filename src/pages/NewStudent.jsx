@@ -1,6 +1,9 @@
 import {useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 function NewStudent () {
+const navigate = useNavigate
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [priorXp, setpriorXp] = useState([])
@@ -20,6 +23,7 @@ function NewStudent () {
       body: JSON.stringify(newStudent)
     })
       const parsed = await response.json()
+      navigate(`/students/${parsed._id}`)
   };
 
   return (
