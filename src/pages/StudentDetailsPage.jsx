@@ -13,11 +13,13 @@ const StudentDetailsPage = () => {
       if (response.status === 200) {
         const parsedStudent = await response.json()
         setStudent(parsedStudent)
+      }else {
+        console.log('Error fetching student:', response.status, response.statusText);
       }
     } catch (error) {
-      console.log(error)
+      console.log('Fetch student error:', error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchStudent()
