@@ -1,45 +1,34 @@
-import {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import StudentForm from "../component/StudentForm";
+import { sendStudent } from "../Utils/studentAPICalls";
 
-function NewStudent () {
-const navigate = useNavigate()
+function NewStudent() {
+  const navigate = useNavigate()
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [priorXp, setpriorXp] = useState([])
-
-  const handleNewStudent = async() => {
+  const handleNewStudent = async payload => {
     try {
-      const priorXpArray = priorXp.split(' ')
+      const priorXpArray = payload.priorxp.split(' ')
       const newStudent = {
-        name,
-        email,
-        priorXP: priorXpArray
+        name: payload.name,
+        email: payload.email,
+        priorxp: priorXpArray,
       };
-      const response = await fetch('http://localhost:5005/api/students/',{
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newStudent)
-      })
-        await response.json()
-        navigate(`/students`)
+      
+      const response = await sendStudent(newStudent)
+      const parsed = await response.json()
+      navigate(`/students/${parsed._id}`)
+
     } catch (error) {
-      console.log("new student", error)
+      console.log("new student:", error)
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleNewStudent}>
-        <input type='text' value={name} placeholder='Name' onChange={(e)=>{setName(e.target.value)}}/>
-        <input type='text' value={email} placeholder='Email' onChange={(e)=>{setEmail(e.target.value)}}/>
-        <input type='text' value={priorXp} placeholder='Prior Experience' onChange={(e)=>{setpriorXp(e.target.value)}}/>
-        <button type='Submit'>Submit</button>
-      </form>
+      <h1>New Student</h1>
+     <StudentForm onSubmit={handleNewStudent} />
     </div>
   )
-  }
+}
 
 export default NewStudent

@@ -1,0 +1,22 @@
+export const fetchStudent = async(studentId, setter) => {
+    try {
+      const response = await fetch (`http://localhost:5005/api/students/${studentId}`)
+      if (response.status === 200) {
+        const parsedStudent = await response.json()
+        setter(parsedStudent)
+      }
+    } catch (error) {
+      console.log('Fetch student error:', error );
+    }
+  };
+
+
+export const sendStudent = async (student, method = 'POST', studentId = '' ) => {
+  return fetch(`http://localhost:5005/api/students/${studentId}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      },
+    body: JSON.stringify(student)
+  })
+}

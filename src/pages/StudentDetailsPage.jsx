@@ -1,5 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { fetchStudent } from "../Utils/studentAPICalls";
 
 const StudentDetailsPage = () => {
   const {studentId} = useParams()
@@ -7,22 +8,8 @@ const StudentDetailsPage = () => {
 
   const [student, setStudent] = useState();
 
-  const fetchStudent = async() => {
-    try {
-      const response = await fetch (`http://localhost:5005/api/students/${studentId}`)
-      if (response.status === 200) {
-        const parsedStudent = await response.json()
-        setStudent(parsedStudent)
-      }else {
-        console.log('Error fetching student:', response.status, response.statusText);
-      }
-    } catch (error) {
-      console.log('Fetch student error:', error);
-    }
-  };
-
   useEffect(() => {
-    fetchStudent()
+    fetchStudent(studentId, setStudent)
   }, [])
 
   const handleDelete = async() => {
@@ -48,6 +35,7 @@ const StudentDetailsPage = () => {
           <li>{currentXp}</li>
         ))}
       </ul>
+      <Link to={`/students/${student._id}/update`}>Update</Link>
       <button type='button' onClick={handleDelete}>Delete</button>
     </>
   ) : <h1>Loading...</h1> 
